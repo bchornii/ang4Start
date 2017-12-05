@@ -4,19 +4,9 @@ import { CoursesService } from '../courses.service';
 @Component({
   selector: 'courses',
   template: `
-    <h2>{{title}}</h2>
-    <ul>
-      <li *ngFor="let course of courses">
-        {{course}}
-      </li>
-    </ul>
+    {{text | summary:10:true }}
   `
 })
 export class CoursesComponent {
-  title = "List of courses";
-  courses: string[];
-
-  constructor(service: CoursesService){
-    this.courses = service.getCourses();
-  }
+  text = 'Some veryyyyyyyyyyyy looooooooooooooong teexxxxxxxxttttttttttttttttt';
 }
