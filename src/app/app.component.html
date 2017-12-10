@@ -1,16 +1,18 @@
+<div>1----------------------------------------------------------------------</div>
+<!-- component API (@Input, @Output) -->
 <app-favorite-component
   [is-favorite]='post.isFavorite'
   (changed)="onFavoriteChange($event)">
 </app-favorite-component>
 
-<br/>
-
+<div>2----------------------------------------------------------------------</div>
+<!-- ngIf -->
 <div *ngIf="courses.length > 0; then coursesList else noCourses"></div>
 <ng-template #coursesList>List of courses</ng-template>
 <ng-template #noCourses>No courses</ng-template>
 
-<br />
-
+<div>3---------------------------------------------------------------------</div>
+<!-- ngSwitch -->
 <ul class="nav nav-pills">
   <li [class.active]="viewMode=='map'">
     <a (click)="viewMode='map'; $event.preventDefault()" href="">Map View</a>
@@ -24,3 +26,26 @@
   <div *ngSwitchCase="'list'">List View Content</div>
   <div *ngSwitchDefault>Otherwise</div>
 </div>
+
+<div>4----------------------------------------------------------------------</div>
+<!-- ngFor -->
+<button
+  class="btn btn-primary"
+  (click)="onAddCourse()">
+  Add course
+</button>
+<ul>
+  <li *ngFor="let course of courses2;
+              index as i;
+              even as isEven;
+              odd as isOdd;
+              first as isFirst;
+              last as isLast">
+      {{i}} - {{course.name}}
+      <span [hidden]="!isEven">(EVEN)</span>
+      <span [hidden]="!isFirst">(FIRST)</span>
+      <span [hidden]="!isOdd">(ODD)</span>
+      <span [hidden]="!isLast">(LAST)</span>
+      <button (click)="onRemoveCourse(course)">Remove</button>
+  </li>
+</ul>
