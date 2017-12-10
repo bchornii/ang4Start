@@ -31,4 +31,8 @@ export class AppComponent {
     let index = this.courses2.indexOf(course);
     this.courses2.splice(index, 1);
   }
+
+  trackCourse(index, course: {id: number, name: string}){
+    return course ? course.id : undefined;
+  }
 }
