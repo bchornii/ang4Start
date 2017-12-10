@@ -56,3 +56,12 @@
 <span>{{task.title}}</span>
 <br />
 <span>{{task.assigne?.name}}</span>
+
+<div>6----------------------------------------------------------------------</div>
+<!-- custom directive -->
+
+<!-- 1. for multiple input fields in custom directive -->
+<!-- <input type="text" appInputFormat [format]="'lowercase'" /> -->
+
+<!-- 2. for multiple single input field in custom directive -->
+<input type="text" [appInputFormat]="'lowercase'" />
