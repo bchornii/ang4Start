@@ -11,6 +11,7 @@ export class AppComponent {
   post = {
     isFavorite: true
   };
+  courses = [1, 2, 3];
 
   onFavoriteChange(obj: FavoriteChangedEventArgs){
     console.log(obj.msg);

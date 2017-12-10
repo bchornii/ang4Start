@@ -2,3 +2,9 @@
   [is-favorite]='post.isFavorite'
   (changed)="onFavoriteChange($event)">
 </app-favorite-component>
+
+<br/>
+
+<div *ngIf="courses.length > 0; then coursesList else noCourses"></div>
+<ng-template #coursesList>List of courses</ng-template>
+<ng-template #noCourses>No courses</ng-template>
