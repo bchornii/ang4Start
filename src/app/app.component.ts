@@ -17,6 +17,12 @@ export class AppComponent {
     {id: 1, name: 'course1'},
     {id: 2, name: 'course2'}
   ];
+  task = {
+    title: 'Review application',
+    assigne: {
+      name: 'John Smith'
+    }
+  };
 
   onFavoriteChange(obj: FavoriteChangedEventArgs){
     console.log(obj.msg);
