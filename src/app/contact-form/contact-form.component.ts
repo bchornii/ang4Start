@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './contact-form.component.html'
 })
 export class ContactFormComponent implements OnInit {
+  isChecked: boolean;
 
   constructor() { }
 
@@ -13,6 +14,10 @@ export class ContactFormComponent implements OnInit {
 
   log(el){
     console.log(el);
+  }
+
+  onSubmit(f){
+    console.log(f)
   }
 
 }
