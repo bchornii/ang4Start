@@ -1,4 +1,4 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+<form #f="ngForm" (ngSubmit)="onSubmit(f, $event)">
   <div class="form-group">
       <label for="firstName">First Name</label>
       <input required
@@ -25,6 +25,14 @@
     <label>
       <input type="checkbox" #subscribe="ngModel" ngModel name="isSubscribe" (change)="log(subscribe.value)">Subscribe to mailing list
     </label>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod">Contact method</label>
+    <select ngModel name="contactMethod" id="contactMethod"
+            #select="ngModel" class="form-control">
+      <option value="">All others</option>
+      <option *ngFor="let method of contactMethods" [value]="method.id">{{method.name}}</option>
+    </select>
   </div>
   <p>
     {{f.value | json}}
