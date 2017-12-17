@@ -21,4 +21,13 @@ export class SignupFormComponent {
     return this.form.get('username');
   }
 
+  login(){
+    let isValid = false; // should be some service call
+    if(!isValid){
+      this.form.setErrors({
+        invalidLogin: true
+      });
+    }
+  }
+
 }
