@@ -9,4 +9,18 @@ export class UsernameValidators{
     }
     return null;
   }
+
+  static shouldBeUnique(c: AbstractControl) : Promise<ValidationErrors | null> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if(c.value === 'joe'){
+          resolve({
+            shouldBeUnique: true
+          });
+        } else {
+          resolve(null);
+        }
+      }, 2000);
+    });
+  }
 }
