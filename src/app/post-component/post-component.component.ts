@@ -1,16 +1,18 @@
 import { Http } from '@angular/http';
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'post-component',
   templateUrl: './post-component.component.html'
 })
-export class PostComponentComponent {
+export class PostComponentComponent implements OnInit {
   private url = "http://jsonplaceholder.typicode.com/posts";
   posts: any[];
 
-  constructor(private http: Http){
+  constructor(private http: Http){ }
+
+  ngOnInit() {
     this.http.get(this.url)
         .subscribe(response => {
           this.posts = response.json();
