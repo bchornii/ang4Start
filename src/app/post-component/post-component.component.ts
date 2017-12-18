@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../services/post.service';
+import { AppError } from '../common/app-error';
+import { NotFoundError } from '../common/not-found-error';
 
 @Component({
   selector: 'post-component',
@@ -45,12 +47,9 @@ export class PostComponentComponent implements OnInit {
           response => {
             console.log(response.json());
           },
-          (error: Response) => {
-            if(error.status === 404){
-              alert('Post does not exist.')
-            } else {
-              alert('An error occured.');
-              console.log(error);
+          (error: AppError) => {
+            if(error instanceof NotFoundError){
+              alert('Post not found.')
             }
           });
   }
