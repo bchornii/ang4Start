@@ -12,9 +12,14 @@ export class PostComponentComponent implements OnInit {
 
   ngOnInit() {
     this.postService.getPosts()
-        .subscribe(response => {
-          this.posts = response.json();
-        });
+        .subscribe(
+          response => {
+            this.posts = response.json();
+          },
+          error => {
+            alert('An error occured.');
+            console.log(error);
+          });
   }
 
   createPost(input: HTMLInputElement){
@@ -23,16 +28,30 @@ export class PostComponentComponent implements OnInit {
     };
     input.value = '';
     this.postService.createPost(post)
-        .subscribe(response => {
-          post['id'] = response.json().id;
-          this.posts.splice(0, 0, post);
-        });
+        .subscribe(
+          response => {
+            post['id'] = response.json().id;
+            this.posts.splice(0, 0, post);
+          },
+          error => {
+            alert('An error occured.');
+            console.log(error);
+          });
   }
 
   updatePost(post){
     this.postService.updatePost(post)
-        .subscribe(response => {
-          console.log(response.json());
-        })
+        .subscribe(
+          response => {
+            console.log(response.json());
+          },
+          (error: Response) => {
+            if(error.status === 404){
+              alert('Post does not exist.')
+            } else {
+              alert('An error occured.');
+              console.log(error);
+            }
+          });
   }
 }
