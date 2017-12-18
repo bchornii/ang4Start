@@ -1,19 +1,17 @@
-import { Http } from '@angular/http';
-
 import { Component, OnInit } from '@angular/core';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'post-component',
   templateUrl: './post-component.component.html'
 })
 export class PostComponentComponent implements OnInit {
-  private url = "http://jsonplaceholder.typicode.com/posts";
   posts: any[];
 
-  constructor(private http: Http){ }
+  constructor(private postService: PostService){ }
 
   ngOnInit() {
-    this.http.get(this.url)
+    this.postService.getPosts()
         .subscribe(response => {
           this.posts = response.json();
         });
@@ -24,7 +22,7 @@ export class PostComponentComponent implements OnInit {
       title: input.value
     };
     input.value = '';
-    this.http.post(this.url, JSON.stringify(post))
+    this.postService.createPost(post)
         .subscribe(response => {
           post['id'] = response.json().id;
           this.posts.splice(0, 0, post);
@@ -32,7 +30,7 @@ export class PostComponentComponent implements OnInit {
   }
 
   updatePost(post){
-    this.http.patch(this.url + '/' + post.id, JSON.stringify({isRead: true }))
+    this.postService.updatePost(post)
         .subscribe(response => {
           console.log(response.json());
         })
