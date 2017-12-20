@@ -17,10 +17,6 @@ export class PostComponentComponent implements OnInit {
         .subscribe(
           response => {
             this.posts = response.json();
-          },
-          error => {
-            alert('An error occured.');
-            console.log(error);
           });
   }
 
@@ -34,10 +30,6 @@ export class PostComponentComponent implements OnInit {
           response => {
             post['id'] = response.json().id;
             this.posts.splice(0, 0, post);
-          },
-          error => {
-            alert('An error occured.');
-            console.log(error);
           });
   }
 
@@ -50,6 +42,8 @@ export class PostComponentComponent implements OnInit {
           (error: AppError) => {
             if(error instanceof NotFoundError){
               alert('Post not found.')
+            } else {
+              throw error;
             }
           });
   }
