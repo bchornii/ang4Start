@@ -14,10 +14,7 @@ export class PostComponentComponent implements OnInit {
 
   ngOnInit() {
     this.postService.getPosts()
-        .subscribe(
-          response => {
-            this.posts = response.json();
-          });
+        .subscribe(posts => this.posts = posts);
   }
 
   createPost(input: HTMLInputElement){
@@ -27,8 +24,8 @@ export class PostComponentComponent implements OnInit {
     input.value = '';
     this.postService.createPost(post)
         .subscribe(
-          response => {
-            post['id'] = response.json().id;
+          newPost => {
+            post['id'] = newPost.id;
             this.posts.splice(0, 0, post);
           });
   }
@@ -36,8 +33,8 @@ export class PostComponentComponent implements OnInit {
   updatePost(post){
     this.postService.updatePost(post)
         .subscribe(
-          response => {
-            console.log(response.json());
+          updatedPost => {
+            console.log(updatedPost);
           },
           (error: AppError) => {
             if(error instanceof NotFoundError){

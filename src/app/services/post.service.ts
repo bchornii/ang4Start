@@ -4,6 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
@@ -15,16 +16,20 @@ export class PostService {
   constructor(private http: Http) { }
 
   getPosts(){
-    return this.http.get(this.url);
+    return this.http.get(this.url)
+      .map(response => response.json())
+      .catch(this.handleError);
   }
 
   createPost(post){
     return this.http.post(this.url, JSON.stringify(post))
+      .map(response => response.json())
       .catch(this.handleError);
   }
 
   updatePost(post){
     return this.http.patch(this.url + '/' + post.id, JSON.stringify({isRead: true}))
+      .map(response => response.json())
       .catch(this.handleError);
   }
 
