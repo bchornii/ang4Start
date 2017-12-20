@@ -19,16 +19,22 @@ export class PostService {
   }
 
   createPost(post){
-    return this.http.post(this.url, JSON.stringify(post));
+    return this.http.post(this.url, JSON.stringify(post))
+      .catch(this.handleError);
   }
 
   updatePost(post){
     return this.http.patch(this.url + '/' + post.id, JSON.stringify({isRead: true}))
-      .catch((error: Response) => {
-        if(error.status === 404){
-          return Observable.throw(new NotFoundError(error.json()));
-        }
-        return Observable.throw(new AppError(error));
-      });
+      .catch(this.handleError);
+  }
+
+  private handleError(error: Response) {
+    if(error.status === 400){
+      //... do something =)
+    }
+    if(error.status === 404){
+      return Observable.throw(new NotFoundError(error.json()));
+    }
+    return Observable.throw(new AppError(error));
   }
 }
