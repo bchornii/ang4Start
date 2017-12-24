@@ -1,0 +1,84 @@
+<div>1----------------------------------------------------------------------</div>
+<!-- component API (@Input, @Output) -->
+<app-favorite-component
+  [is-favorite]='post.isFavorite'
+  (changed)="onFavoriteChange($event)">
+</app-favorite-component>
+
+<div>2----------------------------------------------------------------------</div>
+<!-- ngIf -->
+<div *ngIf="courses.length > 0; then coursesList else noCourses"></div>
+<ng-template #coursesList>List of courses</ng-template>
+<ng-template #noCourses>No courses</ng-template>
+
+<div>3---------------------------------------------------------------------</div>
+<!-- ngSwitch -->
+<ul class="nav nav-pills">
+  <li [class.active]="viewMode=='map'">
+    <a (click)="viewMode='map'; $event.preventDefault()" href="">Map View</a>
+  </li>
+  <li [class.active]="viewMode=='list'">
+    <a (click)="viewMode='list'; $event.preventDefault()" href="">List View</a>
+  </li>
+</ul>
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'">Map View Content</div>
+  <div *ngSwitchCase="'list'">List View Content</div>
+  <div *ngSwitchDefault>Otherwise</div>
+</div>
+
+<div>4----------------------------------------------------------------------</div>
+<!-- ngFor -->
+<button
+  class="btn btn-primary"
+  (click)="onAddCourse()">
+  Add course
+</button>
+<ul>
+  <li *ngFor="let course of courses2;
+              trackBy: trackCourse;
+              index as i;
+              even as isEven;
+              odd as isOdd;
+              first as isFirst;
+              last as isLast">
+      {{i}} - {{course.name}}
+      <span [hidden]="!isEven">(EVEN)</span>
+      <span [hidden]="!isFirst">(FIRST)</span>
+      <span [hidden]="!isOdd">(ODD)</span>
+      <span [hidden]="!isLast">(LAST)</span>
+      <button (click)="onRemoveCourse(course)">Remove</button>
+  </li>
+</ul>
+
+<div>5----------------------------------------------------------------------</div>
+<!-- safe traversal operator -->
+<span>{{task.title}}</span>
+<br />
+<span>{{task.assigne?.name}}</span>
+
+<div>6----------------------------------------------------------------------</div>
+<!-- custom directive -->
+
+<!-- 1. for multiple input fields in custom directive -->
+<!-- <input type="text" appInputFormat [format]="'lowercase'" /> -->
+
+<!-- 2. for multiple single input field in custom directive -->
+<input type="text" [appInputFormat]="'lowercase'" />
+
+<div>7----------------------------------------------------------------------</div>
+<!-- bootstrap form -->
+<contact-form></contact-form>
+
+<div>8----------------------------------------------------------------------</div>
+<!-- bootstrap form -->
+<signup-form></signup-form>
+
+<div>9----------------------------------------------------------------------</div>
+<!-- reactive form array -->
+<new-course-form></new-course-form>
+
+<div>10---------------------------------------------------------------------</div>
+<!-- services
+<post-component></post-component>
+-->
