@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'github-followers',
@@ -23,18 +25,18 @@ export class GithubFollowersComponent implements OnInit {
       this.route.queryParamMap
     ]);
 
-    observables.subscribe(combined => {
-      let paramMap = combined[0];
-      let queryParamMap = combined[1];
+    observables
+      .switchMap(combined => {
+        let paramMap = combined[0];
+        let queryParamMap = combined[1];
+        let id = paramMap.get('id');
+        let pageNum = +queryParamMap.get('page');
+        console.log(`id=${id} page=${pageNum}`);
 
-      let id = paramMap.get('id');
-      let pageNum = +queryParamMap.get('page');
-
-      console.log(`id=${id} page=${pageNum}`);
-
-      // use route data to get info from server
-      this.service.getAll()
-        .subscribe(followers => this.followers = followers);
-    });
+        return this.service.getAll();
+      })
+      .subscribe(followers => {
+        this.followers = followers;
+      });
   }
 }
