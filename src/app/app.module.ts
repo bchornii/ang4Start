@@ -17,6 +17,10 @@ import { NewCourseFormComponent } from './new-course-form/new-course-form.compon
 import { PostComponentComponent } from './post-component/post-component.component';
 import { PostService } from './services/post.service';
 import { AppErrorHandler } from './common/app-error-handler';
+import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
+import { GithubProfileComponent } from './github-profile/github-profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { AppErrorHandler } from './common/app-error-handler';
     ContactFormComponent,
     SignupFormComponent,
     NewCourseFormComponent,
-    PostComponentComponent
+    PostComponentComponent,
+    NavbarComponent,
+    HomeComponent,
+    GithubProfileComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
