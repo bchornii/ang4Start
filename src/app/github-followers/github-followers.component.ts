@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/throw';
+
 
 @Component({
   selector: 'github-followers',
@@ -38,5 +40,27 @@ export class GithubFollowersComponent implements OnInit {
       .subscribe(followers => {
         this.followers = followers;
       });
+
+    this.getStubData(12)
+        .subscribe(
+          value => {
+            console.log(value);
+          },
+          error => {
+            console.log(error);
+          });
   }
+
+  private getStubData(value: number) : Observable<any> {
+    return new Observable(observer => {
+      if(value > 20){
+         observer.error("ppc")
+      }
+      setTimeout(() => {
+        observer.next(12345);
+        observer.complete();
+      }, 5000);
+    });
+  }
+
 }
