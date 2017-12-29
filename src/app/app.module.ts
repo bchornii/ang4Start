@@ -24,6 +24,7 @@ import { GithubProfileComponent } from './github-profile/github-profile.componen
 import { NotFoundComponent } from './not-found/not-found.component';
 import { GithubFollowersService } from './services/github-followers.service';
 import { GithubFollowersComponent } from './github-followers/github-followers.component';
+import { SpinnerService } from './services/spinner.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { GithubFollowersComponent } from './github-followers/github-followers.co
       provide: ErrorHandler,
       useClass: AppErrorHandler
     },
-    GithubFollowersService
+    GithubFollowersService,
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })

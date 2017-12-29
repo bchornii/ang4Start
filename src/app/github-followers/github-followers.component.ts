@@ -1,3 +1,6 @@
+import { SpinnerState } from './../models/SpinnerState';
+import { SpinnerService } from '../services/spinner.service';
+
 import { GithubFollowersService } from './../services/github-followers.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -8,18 +11,20 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/throw';
 import { Subject } from 'rxjs/Subject';
-
-
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Component({
   selector: 'github-followers',
   templateUrl: './github-followers.component.html',
   styleUrls: ['./github-followers.component.css']
 })
 export class GithubFollowersComponent implements OnInit {
-  followers: any[];
+  spinnerState$: BehaviorSubject<SpinnerState>;
 
+  followers: any[];
+  
   constructor(private service: GithubFollowersService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private spinnerService: SpinnerService) { }
 
   ngOnInit() {
 
@@ -45,22 +50,34 @@ export class GithubFollowersComponent implements OnInit {
       this.getPercentageCharges((charges) => {
         console.log(charges);
       });
+
+      this.spinnerState$ = this.spinnerService.getSpinnerState();
+      if(this.spinnerState$){
+        this.spinnerState$.subscribe({
+          next: (spinnerState: SpinnerState) => console.log(SpinnerState[spinnerState])
+        });
+      }
   }
 
   private getPercentageCharges(success: Function): void {    
+    this.spinnerService.showSpinner();
     this.getDataDomain()
         .subscribe({
           next: (data) => {
+            this.spinnerService.hideSpinner();            
+
             // here will be complex logic where methods depends on each other
+            this.spinnerService.showSpinner();
             this.getDataDomain()
                 .subscribe({
                   next: (dt1) => {
+                    this.spinnerService.hideSpinner()
                     let amount = dt1.chargeAmount * data.chargeAmount;
                     success(amount);
-                  }
+                  }                  
                 });            
           },
-          error: (err) => console.log(err)
+          error: (err) => console.log(err)          
         });        
   }
 
@@ -128,4 +145,3 @@ export class GithubFollowersComponent implements OnInit {
     });
   }
 }
-
