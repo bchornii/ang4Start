@@ -1,0 +1,16 @@
+<div class="form-group" style="margin-top: 10px">
+    <label for="search">Search names</label>
+    <input (keyup)="search(searchInput.value)"
+           #searchInput
+           id="search" 
+           type="text" 
+           class="form-control" 
+           placeholder="Type a word..." />
+  </div>
+  
+<div>
+    <label>Search results:</label>
+    <ul>
+      <li *ngFor="let name of names$ | async">{{name}}</li>
+    </ul>
+  </div>

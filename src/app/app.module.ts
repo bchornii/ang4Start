@@ -25,6 +25,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { GithubFollowersService } from './services/github-followers.service';
 import { GithubFollowersComponent } from './github-followers/github-followers.component';
 import { SpinnerService } from './services/spinner.service';
+import { NameSearchComponent } from './name-search/name-search.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SpinnerService } from './services/spinner.service';
     HomeComponent,
     GithubProfileComponent,
     NotFoundComponent,
-    GithubFollowersComponent
+    GithubFollowersComponent,
+    NameSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
-<p>
+<p #profile>
   github-profile works!
+  {{counter}}
 </p>
 <button
     [routerLink]="['/followers', 1234]"
@@ -11,3 +12,15 @@
     class="btn btn-success">
   Submit
 </button>
+<button
+    (click)="onEmit()"
+    class="btn btn-primary">
+  Emit data
+</button>
+<button
+    (click)="onUnsubscribe()"
+    class="btn btn-primary">
+  Unsubscribe
+</button>
+
+<name-search [names]="names"></name-search>

@@ -12,6 +12,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/throw';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 @Component({
   selector: 'github-followers',
   templateUrl: './github-followers.component.html',
@@ -51,27 +52,64 @@ export class GithubFollowersComponent implements OnInit {
         console.log(charges);
       });
 
-      this.spinnerState$ = this.spinnerService.getSpinnerState();
+      this.spinnerState$ = this.spinnerService.getSpinnerState();      
       if(this.spinnerState$){
         this.spinnerState$.subscribe({
-          next: (spinnerState: SpinnerState) => console.log(SpinnerState[spinnerState])
-        });
+          next: (spinnerState: SpinnerState) => {
+            console.log(SpinnerState[spinnerState])
+          }
+        });        
       }
+
+      this.getSubject()
+          .subscribe({
+            next: () => {
+              console.log('getSubject.next is get called');
+            }
+          });
+
+      this.getObservable()      
+          .subscribe({
+            next: () => console.log('getObservable.next is called')
+          });
+
+      this.getBehaviourSubject()
+          .subscribe({
+            next: (obj) => console.log(`getBehaviourSubject.next is called with value=${obj.value}`)
+          });          
+  }
+
+  private getSubject(): Subject<any>{
+    let s = new Subject<any>();    
+    setTimeout(() => s.next(), 2000);
+    return s;
+  }
+
+  private getObservable(): Observable<any> {
+    return new Observable(subscribe => {
+      setTimeout(() => subscribe.next(), 2000);
+    });
+  }
+
+  private getBehaviourSubject() : BehaviorSubject<any> {
+    return new BehaviorSubject({
+      value: 91
+    });
   }
 
   private getPercentageCharges(success: Function): void {    
-    this.spinnerService.showSpinner();
+    //this.spinnerService.showSpinner();
     this.getDataDomain()
         .subscribe({
           next: (data) => {
-            this.spinnerService.hideSpinner();            
+            //this.spinnerService.hideSpinner();            
 
             // here will be complex logic where methods depends on each other
-            this.spinnerService.showSpinner();
+            //this.spinnerService.showSpinner();
             this.getDataDomain()
                 .subscribe({
                   next: (dt1) => {
-                    this.spinnerService.hideSpinner()
+                    //this.spinnerService.hideSpinner()
                     let amount = dt1.chargeAmount * data.chargeAmount;
                     success(amount);
                   }                  
